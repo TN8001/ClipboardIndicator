@@ -1,5 +1,5 @@
 # ClipboardIndicator
-![アプリスクリーンショット](https://github.com/TN8001/ClipboardIndicator/AppImage.png)
+![アプリスクリーンショット](https://github.com/TN8001/ClipboardIndicator/blob/master/AppImage.png)
 ## 概要
 クリップボードに文字が入っているかを確認する常駐型アプリ。
 ## 特徴
@@ -14,7 +14,7 @@
 
 以上  
 ## ライセンス
-[MIT](https://github.com/TN8001/ClipboardIndicator/LICENSE)
+[MIT](https://github.com/TN8001/ClipboardIndicator/blob/master/LICENSE)
 ## 注意事項
 * 一切責任は持ちません
 * 実行ファイルのフォルダに設定ファイルを作るので書き込めるフォルダにしてください（Program Files等は避けてください）
