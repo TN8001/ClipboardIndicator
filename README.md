@@ -1,5 +1,5 @@
 # ClipboardIndicator
-![アプリスクリーンショット](https://github.com/TN8001/ClipboardIndicator/ApImage.png)
+![アプリスクリーンショット](https://github.com/TN8001/ClipboardIndicator/AppImage.png)
 ## 概要
 クリップボードに文字が入っているかを確認する常駐型アプリ。
 ## 特徴
