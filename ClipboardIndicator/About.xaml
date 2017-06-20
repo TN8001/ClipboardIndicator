@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{Binding AssemblyName, Mode=OneWay, StringFormat=\{0\} のバージョン情報}"
     d:DataContext="{d:DesignInstance {x:Type local:ViewModel}}"
-    Icon="Resources/App.ico"
     ResizeMode="NoResize"
     SizeToContent="WidthAndHeight"
     mc:Ignorable="d">
@@ -87,7 +86,7 @@
                 <LineBreak />
                 <Run Text="使い方の詳しい情報は" />
                 <Hyperlink
-                    NavigateUri="https://tnlauncher.blogspot.jp/"
+                    NavigateUri="https://github.com/TN8001/ClipboardIndicator/"
                     RequestNavigate="Hyperlink_RequestNavigate"
                     ToolTip="{Binding NavigateUri, RelativeSource={RelativeSource Self}}">
                     <Run Text="こちら" />

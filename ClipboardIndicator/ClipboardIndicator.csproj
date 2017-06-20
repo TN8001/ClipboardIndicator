@@ -125,13 +125,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\App.ico" />
+    <Resource Include="Resources\Pointing.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\App.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Pointing.png" />
+    <Resource Include="Resources\App.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
