@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipboardIndicator", "Clipb
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{236F0040-FB7C-4A00-AC88-A1841C153BDF}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\..\Desktop\AppImage.png = ..\..\..\Desktop\AppImage.png
+		AppImage.png = AppImage.png
 		README.md = README.md
 	EndProjectSection
 EndProject
