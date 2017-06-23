@@ -1,6 +1,4 @@
-﻿using System;
-using System.Reflection;
-using System.Windows;
+﻿using System.Windows;
 
 namespace ClipboardIndicator
 {
@@ -8,11 +6,6 @@ namespace ClipboardIndicator
     {
         public string ClipboardText { get => _ClipboardText; set => SetProperty(ref _ClipboardText, value); }
         private string _ClipboardText;
-
-        private static Version v = Assembly.GetExecutingAssembly().GetName().Version;
-        public string AssemblyVersion { get; } = $"{v.Major}.{v.Minor}.{v.Build}";
-        public string AssemblyName { get; } = Assembly.GetEntryAssembly().GetName().Name;
-        public string AssemblyCopyright { get; } = ((AssemblyCopyrightAttribute)Attribute.GetCustomAttribute(Assembly.GetExecutingAssembly(), typeof(AssemblyCopyrightAttribute))).Copyright;
 
         public SettingsModel Setting { get; }
         public SettingWindow SettingWindow { get; }
@@ -28,11 +21,11 @@ namespace ClipboardIndicator
         }
         public ViewModel(ClipboardService clip)
         {
-            var serializer = new SerializeHelper<SettingsModel>(AssemblyName);
+            var serializer = new SerializeHelper<SettingsModel>();
             Setting = serializer.Load();
 
             SettingWindow = new SettingWindow();
-            SettingWindow.DataContext = this;
+            SettingWindow.DataContext = Setting;
 
             ClearCommand = new DelegateCommand(() => clip.Clear());
             ShowSettingCommand = new DelegateCommand(() => SettingWindow.Show());
@@ -43,7 +36,7 @@ namespace ClipboardIndicator
             });
             ShowAboutCommand = new DelegateCommand(() =>
             {
-                var dlg = new About(this);
+                var dlg = new About();
                 dlg.Owner = Application.Current.MainWindow;
                 dlg.ShowDialog();
             });

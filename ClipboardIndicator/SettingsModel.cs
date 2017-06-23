@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Windows;
 using System.Windows.Media;
@@ -129,6 +130,8 @@ namespace ClipboardIndicator
     [DataContract(Namespace = "", Name = "Setting")]
     public class SettingsModel : BindableBase
     {
+        public string AssemblyName { get; } = Assembly.GetEntryAssembly().GetName().Name;
+
         [DataMember(Order = 0)]
         public WindowModel Window { get; private set; }
 

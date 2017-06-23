@@ -14,15 +14,12 @@ namespace ClipboardIndicator
     {
         private string appName;
         private string xmlPath;
-        private bool displaySaveError;
 
         /// <summary>ファイルへのシリアライズヘルパー</summary>
-        /// <param name="appName">ファイル先頭に書き込むコメント中の名前 特にチェックはしない</param>
-        /// <param name="displaySaveError">保存失敗時にダイアログを出すかどうか true:出す</param>
-        public SerializeHelper(string appName, bool displaySaveError = true)
+        /// <param name="appName">ファイル先頭に書き込むコメント中の名前 特にチェックはしない デフォルトAssemblyName</param>
+        public SerializeHelper(string appName = null)
         {
-            this.displaySaveError = displaySaveError;
-            this.appName = appName;
+            this.appName = appName ?? Assembly.GetEntryAssembly().GetName().Name;
         }
 
         private string GetConfigFilePath()
@@ -62,13 +59,15 @@ namespace ClipboardIndicator
             }
         }
         /// <summary>ファイルにシリアライズ Load前にSave不可</summary>
-        public void Save(T obj)
+        /// <param name="displaySaveError">保存失敗時にダイアログを出すかどうか true:出す</param>
+        public void Save(T obj, bool displaySaveError = true)
         {
             if(xmlPath == null) throw new InvalidOperationException("Load前にSaveはできません。");
             SaveAs(obj, xmlPath);
         }
         /// <summary>名前を付けてファイルにシリアライズ</summary>
-        public void SaveAs(T obj, string path)
+        /// <param name="displaySaveError">保存失敗時にダイアログを出すかどうか true:出す</param>
+        public void SaveAs(T obj, string path, bool displaySaveError = true)
         {
             var sb = new StringBuilder();
             sb.Append($"<!-- {appName} SettingFile Don't Edit. -->\n");
