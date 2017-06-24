@@ -32,7 +32,10 @@ namespace ClipboardIndicator
 
             actualWindow.Closing += (s, e) => Unhook();
         }
-        public void Clear() => Clipboard.Clear();
+        public void Clear()
+        {
+            try { Clipboard.Clear(); } catch {  /* CLIPBRD_E_CANT_OPEN対策 */  }
+        }
 
         private void Hook()
         {
