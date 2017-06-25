@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 
@@ -32,9 +33,19 @@ namespace ClipboardIndicator
 
             actualWindow.Closing += (s, e) => Unhook();
         }
-        public void Clear()
+
+        public async Task ClearAsync()
         {
-            try { Clipboard.Clear(); } catch {  /* CLIPBRD_E_CANT_OPEN対策 */  }
+            //CLIPBRD_E_CANT_OPEN対策にリトライ処理
+            for(var i = 0; i < 5; i++)
+            {
+                try
+                {
+                    Clipboard.Clear();
+                }
+                catch { }
+                await Task.Delay(100);
+            }
         }
 
         private void Hook()
@@ -43,7 +54,7 @@ namespace ClipboardIndicator
             HwndSource.FromHwnd(handle).AddHook(WndProc);
             AddClipboardFormatListener(handle);
 
-            OnClipboardCopied();
+            var _ = OnClipboardCopied(); //#pragma warning disable CS4014
         }
         private void Unhook()
         {
@@ -54,31 +65,50 @@ namespace ClipboardIndicator
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if(msg == WM_CLIPBOARDUPDATE)
-                OnClipboardCopied();
+            {
+                var _ = OnClipboardCopied(); //#pragma warning disable CS4014
+            }
 
             return IntPtr.Zero;
         }
-        private void OnClipboardCopied()
+        private async Task OnClipboardCopied()
         {
-            var text = "";
-            try
-            {
-                if(Clipboard.Contains​Text())
-                    text = Clipboard.GetText()
-                                    .Split(new string[] { Environment.NewLine }, StringSplitOptions.None)
-                                    .First();
-                else
-                {
-                    if(!Clipboard.GetDataObject().GetFormats().Any())
-                        text = "<Empty>";
-                    else
-                        text = "<Not Text Data>";
-                }
-            }
-            catch(COMException) { /* CLIPBRD_E_CANT_OPEN対策 */  text = "<!CANT_OPEN>"; }
-
+            var text = await GetTextAsync();
             Debug.WriteLine($"ClipboardCopied:{text}");
             ClipboardCopied(text);
+        }
+        private async Task<string> GetTextAsync()
+        {
+            //CLIPBRD_E_CANT_OPEN対策にリトライ処理
+            for(var i = 0; i < 5; i++)
+            {
+                try
+                {
+                    return GetClipboardTextFirstLine();
+                }
+                catch { }
+                await Task.Delay(100);
+            }
+
+            return "<!CANT_OPEN>";
+        }
+
+        private static string GetClipboardTextFirstLine()
+        {
+            string text;
+            if(Clipboard.Contains​Text())
+                text = Clipboard.GetText()
+                                .Split(new string[] { Environment.NewLine }, StringSplitOptions.None)
+                                .First();
+            else
+            {
+                if(!Clipboard.GetDataObject().GetFormats().Any())
+                    text = "<Empty>";
+                else
+                    text = "<Not Text Data>";
+            }
+
+            return text;
         }
     }
 }

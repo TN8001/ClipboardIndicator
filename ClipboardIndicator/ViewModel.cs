@@ -27,7 +27,7 @@ namespace ClipboardIndicator
             SettingWindow = new SettingWindow();
             SettingWindow.DataContext = Setting;
 
-            ClearCommand = new DelegateCommand(() => clip.Clear());
+            ClearCommand = new DelegateCommand(async () => await clip.ClearAsync());
             ShowSettingCommand = new DelegateCommand(() => SettingWindow.Show());
             CloseCommand = new DelegateCommand(() =>
             {
