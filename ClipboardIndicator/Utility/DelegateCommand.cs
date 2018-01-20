@@ -1,7 +1,7 @@
 ﻿//(c)okazuki 2010
 //http://blog.okazuki.jp/entry/20100223/1266897125
 
-//Tooltip等用のTextプロパティを追加 TN
+//Tooltip等用のTextプロパティを追加 T.Naga
 
 using System;
 using System.Windows.Input;
@@ -41,10 +41,7 @@ namespace ClipboardIndicator
         private Func<T, bool> _canExecute;
         private static readonly bool IS_VALUE_TYPE;
 
-        static DelegateCommand()
-        {
-            IS_VALUE_TYPE = typeof(T).IsValueType;
-        }
+        static DelegateCommand() => IS_VALUE_TYPE = typeof(T).IsValueType;
 
         public DelegateCommand(Action<T> execute) : this(null, execute, o => true) { }
         public DelegateCommand(Action<T> execute, Func<T, bool> canExecute) : this(null, execute, canExecute) { }

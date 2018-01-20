@@ -18,9 +18,7 @@ namespace ClipboardIndicator
         /// <summary>ファイルへのシリアライズヘルパー</summary>
         /// <param name="appName">ファイル先頭に書き込むコメント中の名前 特にチェックはしない デフォルトAssemblyName</param>
         public SerializeHelper(string appName = null)
-        {
-            this.appName = appName ?? Assembly.GetEntryAssembly().GetName().Name;
-        }
+            => this.appName = appName ?? Assembly.GetEntryAssembly().GetName().Name;
 
         private string GetConfigFilePath()
         {
@@ -63,7 +61,7 @@ namespace ClipboardIndicator
         public void Save(T obj, bool displaySaveError = true)
         {
             if(xmlPath == null) throw new InvalidOperationException("Load前にSaveはできません。");
-            SaveAs(obj, xmlPath);
+            SaveAs(obj, xmlPath, displaySaveError);
         }
         /// <summary>名前を付けてファイルにシリアライズ</summary>
         /// <param name="displaySaveError">保存失敗時にダイアログを出すかどうか true:出す</param>

@@ -5,11 +5,14 @@ using System.Windows.Input;
 
 namespace ClipboardIndicator
 {
+    ///<summary>親Windowごとドラッグ移動するボタン</summary>
     public class DraggableButton : Button
     {
-        public static readonly DependencyProperty CanMoveProperty =
-            DependencyProperty.Register(nameof(CanMove), typeof(bool), typeof(DraggableButton), new PropertyMetadata(true));
+        ///<summary>移動するかどうか</summary>
         public bool CanMove { get => (bool)GetValue(CanMoveProperty); set => SetValue(CanMoveProperty, value); }
+        public static readonly DependencyProperty CanMoveProperty
+            = DependencyProperty.Register(nameof(CanMove), typeof(bool), 
+                typeof(DraggableButton), new PropertyMetadata(true));
 
         private Point? startPos;
 
@@ -34,10 +37,9 @@ namespace ClipboardIndicator
             ReleaseMouseCapture();
             Window.GetWindow(this).DragMove();
             startPos = null;
-        }
-        private bool IsDragStartable(Vector delta)
-        {
-            return (SystemParameters.MinimumHorizontalDragDistance < Math.Abs(delta.X))
+
+            bool IsDragStartable(Vector delta)
+                => (SystemParameters.MinimumHorizontalDragDistance < Math.Abs(delta.X))
                 || (SystemParameters.MinimumVerticalDragDistance < Math.Abs(delta.Y));
         }
     }

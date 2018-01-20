@@ -10,10 +10,7 @@ namespace ClipboardIndicator
     ///<remarks>コンテンツのサイズをStartupPopupのWidth Heightに設定すること</remarks>
     public class StartupPopup : Popup
     {
-        public StartupPopup() : base()
-        {
-            Loaded += OnLoaded;
-        }
+        public StartupPopup() : base() => Loaded += OnLoaded;
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
@@ -21,12 +18,13 @@ namespace ClipboardIndicator
             AllowsTransparency = true;
             PopupAnimation = PopupAnimation.Fade;
             Placement = PlacementMode.Custom;
-            CustomPopupPlacementCallback = CustomCallback;
+            CustomPopupPlacementCallback = PlacementCallback;
             RenderTransform = new RotateTransform();
 
             var window = this.GetLogicalAncestor<Window>();
             window.ContentRendered += Window_ContentRendered;
         }
+
         //PointToScreenを取れるかつRenderTransformが動かせる（唯一の？）タイミング
         //この後でAngle等いじっても反映されない PopupAnimation関連でのPopupの仕様??
         private void Window_ContentRendered(object sender, EventArgs e)
@@ -59,33 +57,18 @@ namespace ClipboardIndicator
             IsOpen = true;
             BeginStoryboard(storyboard);
         }
-        private CustomPopupPlacement[] CustomCallback(Size popupSize, Size targetSize, Point offset)
+
+        private CustomPopupPlacement[] PlacementCallback(Size popupSize, Size targetSize, Point offset)
         {
             //上下反転すると（よくわからないが）ずれたので自前実装
-            //第１希望:真下 第２希望:真上
             var x = (targetSize.Width - popupSize.Width) / 2;
 
             return new CustomPopupPlacement[]
             {
+                //第１希望:真下 第２希望:真上
                 new CustomPopupPlacement(new Point(x , targetSize.Height), PopupPrimaryAxis.None),
                 new CustomPopupPlacement(new Point(x, -popupSize.Height), PopupPrimaryAxis.None),
             };
-        }
-    }
-
-    static class DependencyObjectExtensions
-    {
-        public static T GetLogicalAncestor<T>(this DependencyObject depObj) where T : class
-        {
-            var target = depObj;
-            do
-            {
-                target = LogicalTreeHelper.GetParent(target);
-                if(target == null) break;
-
-            } while(!(target is T));
-
-            return target as T;
         }
     }
 }
