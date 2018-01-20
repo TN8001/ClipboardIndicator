@@ -6,6 +6,8 @@
 * 最低限コピー出来たかを確認するだけの小ささ（大きくも出来ますが）
 * 小さいので起動時に見失わないためのアピール機能（大したことはしていませんが 意外と苦労したので参考にして頂けたら幸いです）
 * クリックでクリップボードのクリア
+## ダウンロード
+[最新バイナリ](https://github.com/TN8001/ClipboardIndicator/releases/download/v1.0.1/ClipboardIndicator.zip)（.NET Framework 4.7以上 Windows10でのみ動作確認）
 ## 使い方
 1. 起動する
 1. 好きな位置に移動する
@@ -16,7 +18,6 @@
 ## ライセンス
 [MIT](https://github.com/TN8001/ClipboardIndicator/blob/master/LICENSE)
 ## 注意事項
-* .NETFramework 4.7以上
 * 一切責任は持ちません
 * 実行ファイルのフォルダに設定ファイルを作るので書き込めるフォルダにしてください（Program Files等は避けてください）
 * 画面からはみ出さない機能のためマルチモニタには不対応
